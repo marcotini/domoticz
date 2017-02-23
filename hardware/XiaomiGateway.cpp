@@ -712,7 +712,7 @@ void XiaomiGateway::xiaomi_udp_server::handle_receive(const boost::system::error
 			std::string model = root["model"].asString();
 			std::string sid = root["sid"].asString();
 			std::string data = root["data"].asString();
-			if ((cmd == "report") || (cmd == "read_ack") || (cmd == "heartbeat")) {
+			if ((cmd == "report") || (cmd == "read_ack")) {
 
 				Json::Value root2;
 				ret = jReader.parse(data.c_str(), root2);
