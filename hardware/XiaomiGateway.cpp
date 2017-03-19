@@ -713,47 +713,7 @@ void XiaomiGateway::xiaomi_udp_server::handle_receive(const boost::system::error
 			std::string sid = root["sid"].asString();
 			std::string data = root["data"].asString();
 			
-			if(cmd == "heartbeat") {
-    				Json::Value root2;
-    				ret = jReader.parse(data.c_str(), root2);
-    				if ((ret) || (!root2.isObject())) {
-        				_eSwitchType type = STYPE_END;
-        				if (model == "gateway") {
-           				name = "Xiaomi RGB Gateway";
-            
-            				if (name == "Xiaomi RGB Gateway") {
-                				std::string rgb = root2["rgb"].asString();
-                				if (rgb != "") {
-                    					std::stringstream ss;
-                    					ss << std::hex << atoi(rgb.c_str());
-                    					std::string hexstring(ss.str());
-                    					if (hexstring.length() == 7) {
-                        					hexstring.insert(0, "0");
-                    					}
-                    				std::string bright_hex = hexstring.substr(0, 2);
-                    				std::stringstream ss2;
-                    				ss2 << std::hex << bright_hex.c_str();
-                    				int brightness = strtoul(bright_hex.c_str(), NULL, 16);
-                    				bool on = false;
-                    				if (rgb != "0") {
-                        				on = true;
-                    				}
-                    				m_XiaomiGateway->InsertUpdateRGBGateway(sid.c_str(), name, on, brightness, 0);
-                			} else {
-                    				//check for token
-                    				std::string token = root["token"].asString();
-                    				if (token != "") {
-						#ifdef _DEBUG
-                        			_log.Log(LOG_STATUS, "XiaomiGateway: Token Received - %s", token.c_str());
-						#endif
-                        			m_XiaomiGateway->UpdateToken(token);
-                        			showmessage = false;
-                    				}
-                			}
-				}
-        		}
-    		}
-	}
+		
 			if ((cmd == "report") || (cmd == "read_ack")) {
 
 				Json::Value root2;
